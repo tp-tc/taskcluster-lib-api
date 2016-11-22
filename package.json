@@ -32,7 +32,7 @@
     "superagent": "0.18.2",
     "superagent-hawk": "0.0.4",
     "superagent-promise": "0.1.2",
-    "taskcluster-client": "^1.2.0",
+    "taskcluster-client": "git+https://github.com/tp-tc/taskcluster-client",
     "taskcluster-lib-scopes": "^0.8.8",
     "type-is": "^1.6.10",
     "uuid": "^2.0.1"

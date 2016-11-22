@@ -21,9 +21,6 @@ var Ajv           = require('ajv');
 var errors        = require('./errors');
 var typeis        = require('type-is');
 
-// Default baseUrl for authentication server
-var AUTH_BASE_URL = 'https://auth.taskcluster.net/v1';
-
 var ping = {
   method:   'get',
   route:    '/ping',
@@ -275,9 +272,9 @@ var nonceManager = function(options) {
  * `remoteAuthentication`.
  */
 var createRemoteSignatureValidator = function(options) {
-  assert(options.authBaseUrl, "options.authBaseUrl is required");
   var auth = new taskcluster.Auth({
-    baseUrl: options.authBaseUrl
+    baseDomain: options.baseDomain,
+    baseUrl: options.authBaseUrl,
   });
   return function(data) {
     return auth.authenticateHawk(data);
@@ -720,7 +717,8 @@ API.prototype.router = function(options) {
     context:              {},
     nonceManager:         nonceManager(),
     signatureValidator:   createRemoteSignatureValidator({
-      authBaseUrl:        options.authBaseUrl || AUTH_BASE_URL
+      baseDomain:         options.baseDomain,
+      authBaseUrl:        options.authBaseUrl,
     }),
     raven:                null,
   });
